@@ -2,21 +2,21 @@
 
 int main()
 {
-    int day;
+    int number, count = 0;
+    std::cout << "Введите число: ";
+    std::cin >> number;
 
-    std::cout << "Введите номер дня месяца мая (1-31): ";
-    std::cin >> day;
-
-    if (day < 1 || day > 31)
+    if (number == 0)
     {
-        std::cout << "Неверный номер дня. Введите число от 1 до 31: ";
-    }
-    if ((day >= 1 && day <= 5) || (day >= 8 && day <= 10) || day % 7 == 6 || day % 7 == 0)
-    {
-        std::cout << "День " << day << " мая - выходной.";
+        count = 1;
     }
     else
     {
-        std::cout << "День " << day << " мая - рабочий.";
+        while (number > 0)
+        {
+            number = number / 10;
+            ++count;
+        }
     }
+    std::cout << "Цифр в числе: " << count;
 }

@@ -2,26 +2,16 @@
 
 int main()
 {
-    int speed;
-    int height;
-    std::cout << "Введите скорость самолета: ";
-    std::cin >> speed;
-    std::cout << "введите высоту самолета: ";
-    std::cin >> height;
-    if ((speed >= 750 && speed <= 850) && (height >= 9000 && height <= 9500))
+    int hour, sum_hour;
+    std::cout << "Введите, который час: ";
+    std::cin >> hour;
+    if (hour < 1 || hour > 12)
     {
-        std::cout << "Правильный эшелон" << "\n";
+        std::cout << "На циферблате всего 12 значений! \n";
     }
-    else if ((speed < 750 || speed > 850) && (height < 9000 || height > 9500))
+    while (sum_hour < hour)
     {
-        std::cout << "Необходима корректировка высоты и скорости" << "\n";
-    }
-    else if (speed < 750 || speed > 850)
-    {
-        std::cout << "Необходима корректировка скорости" << "\n";
-    }
-    else
-    {
-        std::cout << "Необходима корректировка высоты" << "\n";
+        std::cout << "Ку- ку! \n";
+        ++sum_hour;
     }
 }

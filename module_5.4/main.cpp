@@ -2,54 +2,43 @@
 
 int main()
 {
-    int N;
-    int bill5000 = 0, bill2000 = 0, bill1000 = 0, bill500 = 0, bill200 = 0, bill100 = 0;
-
-    std::cout << "Введите сумму, которую хотите снять (от 100 до 150000): ";
-    std::cin >> N;
-
-    if (N < 100 || N > 150000)
+    int ticket_number;
+    std::cout << "Введите номер билета: ";
+    std::cin >> ticket_number;
+    int sum_first = 0, sum_last = 0;
+    int digits_count = 0;
+    int ticket_copy = ticket_number;
+    while (ticket_copy > 0)
     {
-        std::cout << "Ошибка: Невозможно выдать такую сумму.";
-        return 1;
+        ticket_copy /= 10;
+        digits_count++;
     }
 
-    if (N % 100 != 0)
+    if (digits_count % 2 != 0)
     {
-        std::cout << "Ошибка: Сумма должна быть кратна 100.";
-        return 1;
+        std::cout << "Неверный номер билета! Номер должен быть четным количеством цифр.";
+        return 0;
     }
-
-    for (int i = 0; i < 1 && N >= 5000; N -= 5000)
-        bill5000++;
-    for (int i = 0; i < 1 && N >= 2000; N -= 2000)
-        bill2000++;
-    for (int i = 0; i < 1 && N >= 1000; N -= 1000)
-        bill1000++;
-    for (int i = 0; i < 1 && N >= 500; N -= 500)
-        bill500++;
-    for (int i = 0; i < 1 && N >= 200; N -= 200)
-        bill200++;
-    for (int i = 0; i < 1 && N >= 100; N -= 100)
-        bill100++;
-
-    if (N != 0)
+    for (int i = 0; i < digits_count; ++i)
     {
-        std::cout << "Ошибка: Невозможно выдать такую сумму.";
+        int digit = ticket_number % 10;
+        ticket_number /= 10;
+
+        if (i < digits_count / 2)
+        {
+            sum_first += digit;
+        }
+        else
+        {
+            sum_last += digit;
+        }
+    }
+    if (sum_first == sum_last)
+    {
+        std::cout << "Билет счастливый!";
     }
     else
     {
-        if (bill5000 > 0)
-            std::cout << "Купюры по 5000 рублей: " << bill5000 << '\n';
-        if (bill2000 > 0)
-            std::cout << "Купюры по 2000 рублей: " << bill2000 << '\n';
-        if (bill1000 > 0)
-            std::cout << "Купюры по 1000 рублей: " << bill1000 << '\n';
-        if (bill500 > 0)
-            std::cout << "Купюры по 500 рублей: " << bill500 << '\n';
-        if (bill200 > 0)
-            std::cout << "Купюры по 200 рублей: " << bill200 << '\n';
-        if (bill100 > 0)
-            std::cout << "Купюры по 100 рублей: " << bill100 << '\n';
+        std::cout << "Повезёт в следующий раз!";
     }
 }
