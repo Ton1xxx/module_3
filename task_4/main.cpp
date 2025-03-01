@@ -1,32 +1,32 @@
 #include <iostream>
+#include <cmath>
 
 int main()
 {
-    int width, height;
-    std::cout << "Введите ширину и высоту рамки: ";
-    std::cin >> width >> height;
-    for (int i = 0; i < width; i++)
+    double file_size, connection_speed;
+    std::cout << "Укажите размер файла для скачивания: ";
+    std::cin >> file_size;
+    std::cout << "Какова скорость вашего соединения? ";
+    std::cin >> connection_speed;
+    if (file_size <= 0 || connection_speed <= 0)
     {
-        std::cout << "-";
+        std::cout << "Ошибка: размер файла и скорость соединения должны быть положительными числами." << std::endl;
     }
-    std::cout << std::endl;
-    for (int i = 0; i < height - 2; i++)
+    double downloaded = 0;
+    int seconds = 0;
+    while (downloaded < file_size)
     {
-        std::cout << "|";
-        for (int j = 0; j < width - 2; j++)
+        downloaded += connection_speed;
+        seconds++;
+        if (downloaded > file_size)
         {
-            std::cout << " ";
+            downloaded = file_size;
         }
-        std::cout << "|" << std::endl;
+        int percent = static_cast<int>((downloaded / file_size) * 100);
+        std::cout << "Прошло " << seconds << " сек. Скачано "
+                  << static_cast<int>(downloaded) << " из "
+                  << static_cast<int>(file_size) << " МБ ("
+                  << percent << "%)." << std::endl;
     }
-    if (height > 1)
-    {
-        for (int i = 0; i < width; i++)
-        {
-            std::cout << "-";
-        }
-        std::cout << std::endl;
-    }
-
-    return 0;
+    std::cout << "Загрузка завершена. Время скачивания: " << seconds << " сек." << std::endl;
 }

@@ -1,63 +1,27 @@
 #include <iostream>
+#include <cmath>
 
 int main()
 {
-    int x = 6, y = 19;
-    std::string command;
-
-    while (true)
+    double x, y, z;
+    const int cube_size = 5;
+    std::cout << "Введите размеры бруска (X Y Z): ";
+    while (!(std::cin >> x >> y >> z) || x < cube_size || y < cube_size || z < cube_size)
     {
-        std::cout << "Марсоход находится на позиции " << x << ", " << y << ", введите команду: ";
-        std::cin >> command;
-        if (command == "W")
-        {
-            if (x > 1)
-            {
-                x--;
-            }
-            else
-            {
-                std::cout << "Марсоход не может двигаться на север. Столкновение со стеной!" << std::endl;
-            }
-        }
-        else if (command == "S")
-        {
-            if (x < 15)
-            {
-                x++;
-            }
-            else
-            {
-                std::cout << "Марсоход не может двигаться на юг. Столкновение со стеной!" << std::endl;
-            }
-        }
-        else if (command == "A")
-        {
-            if (y > 1)
-            {
-                y--;
-            }
-            else
-            {
-                std::cout << "Марсоход не может двигаться на запад. Столкновение со стеной!" << std::endl;
-            }
-        }
-        else if (command == "D")
-        {
-            if (y < 20)
-            {
-                y++;
-            }
-            else
-            {
-                std::cout << "Марсоход не может двигаться на восток. Столкновение со стеной!" << std::endl;
-            }
-        }
-        else
-        {
-            std::cout << "Ошибка ввода! Введите W, S, A или D." << std::endl;
-            continue;
-        }
-        std::cout << "Марсоход находится на позиции " << x << ", " << y << std::endl;
+        std::cout << "Ошибка! Введите корректные размеры (не меньше 5 см): ";
+        std::cin.clear();
+        while (std::cin.get() != '\n')
+            ;
     }
+    int count_x = static_cast<int>(x) / cube_size;
+    int count_y = static_cast<int>(y) / cube_size;
+    int count_z = static_cast<int>(z) / cube_size;
+    int total_cubes = count_x * count_y * count_z;
+    int max_set_size = 0;
+    for (int i = 1; i * i * i <= total_cubes; i++)
+    {
+        max_set_size = i * i * i;
+    }
+    std::cout << "Из этого бруска можно изготовить " << total_cubes << " кубиков.\n";
+    std::cout << "Из них можно составить набор из " << max_set_size << " кубиков." << std::endl;
 }
