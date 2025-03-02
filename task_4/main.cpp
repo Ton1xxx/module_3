@@ -1,32 +1,40 @@
 #include <iostream>
-#include <cmath>
 
 int main()
 {
-    double file_size, connection_speed;
-    std::cout << "Укажите размер файла для скачивания: ";
-    std::cin >> file_size;
-    std::cout << "Какова скорость вашего соединения? ";
-    std::cin >> connection_speed;
-    if (file_size <= 0 || connection_speed <= 0)
+    std::string secret, guess;
+    std::cout << "Enter first number: ";
+    std::cin >> secret;
+    std::cout << "Enter second number: ";
+    std::cin >> guess;
+
+    int bulls = 0, cows = 0;
+    bool counted_secret[4] = {false}, counted_guess[4] = {false};
+
+    for (int i = 0; i < 4; i++)
     {
-        std::cout << "Ошибка: размер файла и скорость соединения должны быть положительными числами." << std::endl;
-    }
-    double downloaded = 0;
-    int seconds = 0;
-    while (downloaded < file_size)
-    {
-        downloaded += connection_speed;
-        seconds++;
-        if (downloaded > file_size)
+        if (secret[i] == guess[i])
         {
-            downloaded = file_size;
+            bulls++;
+            counted_secret[i] = counted_guess[i] = true;
         }
-        int percent = static_cast<int>((downloaded / file_size) * 100);
-        std::cout << "Прошло " << seconds << " сек. Скачано "
-                  << static_cast<int>(downloaded) << " из "
-                  << static_cast<int>(file_size) << " МБ ("
-                  << percent << "%)." << std::endl;
     }
-    std::cout << "Загрузка завершена. Время скачивания: " << seconds << " сек." << std::endl;
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (!counted_guess[i])
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (!counted_secret[j] && guess[i] == secret[j])
+                {
+                    cows++;
+                    counted_secret[j] = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    std::cout << "bulls: " << bulls << ", cows: " << cows << std::endl;
 }

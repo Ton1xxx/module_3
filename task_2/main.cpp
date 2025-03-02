@@ -2,40 +2,42 @@
 
 int main()
 {
-    float health, resistance, damage;
-    std::cout << "Введите количество здоровья орка (0-1): ";
-    while (!(std::cin >> health) || health < 0 || health > 1)
+    std::string num;
+    std::cout << "Enter number: ";
+    std::cin >> num;
+
+    if (num.empty())
     {
-        std::cout << "Ошибка! Введите число от 0 до 1: ";
-        std::cin.clear();
-        while (std::cin.get() != '\n')
-            ;
+        std::cout << "No\n";
     }
-    std::cout << "Введите сопротивляемость магии орка (0-1): ";
-    while (!(std::cin >> resistance) || resistance < 0 || resistance > 1)
+
+    int start = (num[0] == '-') ? 1 : 0;
+    if (start == 1 && num.size() == 1)
     {
-        std::cout << "Ошибка! Введите число от 0 до 1: ";
-        std::cin.clear();
-        while (std::cin.get() != '\n')
-            ;
+        std::cout << "No\n";
     }
-    while (health > 0)
+
+    bool hasDigit = false, hasDot = false;
+    for (int i = start; i < num.size(); ++i)
     {
-        std::cout << "Введите мощность огненного шара (0-1): ";
-        while (!(std::cin >> damage) || damage < 0 || damage > 1)
+        if (isdigit(num[i]))
         {
-            std::cout << "Ошибка! Введите число от 0 до 1: ";
-            std::cin.clear();
-            while (std::cin.get() != '\n')
-                ;
+            hasDigit = true;
         }
-        float actual_damage = damage * (1 - resistance);
-        health -= actual_damage;
-        if (health <= 0)
+        else if (num[i] == '.')
         {
-            std::cout << "Орк погиб!" << std::endl;
-            break;
+            if (hasDot)
+            {
+                std::cout << "No\n";
+                return 0;
+            }
+            hasDot = true;
         }
-        std::cout << "Урон: " << actual_damage << ", оставшееся здоровье: " << health << std::endl;
+        else
+        {
+            std::cout << "No\n";
+        }
     }
+
+    std::cout << (hasDigit ? "Yes\n" : "No\n");
 }
