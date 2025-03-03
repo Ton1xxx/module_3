@@ -1,47 +1,35 @@
 #include <iostream>
+#include <cmath>
 
 int main()
 {
-    std::string depTime, arrTime;
-    int depHours, depMinutes, arrHours, arrMinutes;
+    float a, b, c;
+    std::cout << "a, b, c: ";
+    std::cin >> a >> b >> c;
 
-    std::cout << "Введите время отправления (HH:MM): ";
-    while (true)
+    if (a == 0)
     {
-        std::cin >> depTime;
-        if (depTime.size() == 5 && depTime[2] == ':' &&
-            isdigit(depTime[0]) && isdigit(depTime[1]) &&
-            isdigit(depTime[3]) && isdigit(depTime[4]))
+        std::cout << "Not a quadratic equation!" << std::endl;
+    }
+    else
+    {
+        float discriminant = b * b - 4 * a * c;
+        if (discriminant > 0)
         {
-            depHours = (depTime[0] - '0') * 10 + (depTime[1] - '0');
-            depMinutes = (depTime[3] - '0') * 10 + (depTime[4] - '0');
-            if (depHours >= 0 && depHours < 24 && depMinutes >= 0 && depMinutes < 60)
-                break;
+            float x1 = (-b + std::sqrt(discriminant)) / (2 * a);
+            float x2 = (-b - std::sqrt(discriminant)) / (2 * a);
+            std::cout << "Root 1, 2: " << x1 << ", " << x2 << std::endl;
         }
-        std::cout << "Некорректный формат. Попробуйте снова: ";
+        else if (discriminant == 0)
+        {
+            float x = -b / (2 * a);
+            std::cout << "Root: " << x << std::endl;
+        }
+        else
+        {
+            std::cout << "Complex scenario is not supported!" << std::endl;
+        }
     }
 
-    std::cout << "Введите время прибытия (HH:MM): ";
-    while (true)
-    {
-        std::cin >> arrTime;
-        if (arrTime.size() == 5 && arrTime[2] == ':' &&
-            isdigit(arrTime[0]) && isdigit(arrTime[1]) &&
-            isdigit(arrTime[3]) && isdigit(arrTime[4]))
-        {
-            arrHours = (arrTime[0] - '0') * 10 + (arrTime[1] - '0');
-            arrMinutes = (arrTime[3] - '0') * 10 + (arrTime[4] - '0');
-            if (arrHours >= 0 && arrHours < 24 && arrMinutes >= 0 && arrMinutes < 60)
-                break;
-        }
-        std::cout << "Некорректный формат. Попробуйте снова: ";
-    }
-
-    int depTotalMinutes = depHours * 60 + depMinutes;
-    int arrTotalMinutes = arrHours * 60 + arrMinutes;
-    int durationMinutes = arrTotalMinutes - depTotalMinutes;
-    if (durationMinutes < 0)
-        durationMinutes += 1440;
-
-    std::cout << "Поездка составила " << durationMinutes / 60 << " ч. " << durationMinutes % 60 << " мин." << std::endl;
+    return 0;
 }
