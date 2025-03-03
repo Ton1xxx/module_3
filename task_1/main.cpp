@@ -1,35 +1,38 @@
 #include <iostream>
-#include <cmath>
+#include <string>
 
-int main()
+std::string encrypt_caesar(const std::string &text, int shift)
 {
-    float a, b, c;
-    std::cout << "a, b, c: ";
-    std::cin >> a >> b >> c;
+    std::string result;
 
-    if (a == 0)
+    for (char ch : text)
     {
-        std::cout << "Not a quadratic equation!" << std::endl;
-    }
-    else
-    {
-        float discriminant = b * b - 4 * a * c;
-        if (discriminant > 0)
+        if (std::isalpha(ch))
         {
-            float x1 = (-b + std::sqrt(discriminant)) / (2 * a);
-            float x2 = (-b - std::sqrt(discriminant)) / (2 * a);
-            std::cout << "Root 1, 2: " << x1 << ", " << x2 << std::endl;
-        }
-        else if (discriminant == 0)
-        {
-            float x = -b / (2 * a);
-            std::cout << "Root: " << x << std::endl;
+            char base = std::isupper(ch) ? 'A' : 'a';
+            result += (ch - base + shift) % 26 + base;
         }
         else
         {
-            std::cout << "Complex scenario is not supported!" << std::endl;
+            result += ch;
         }
     }
+
+    return result;
+}
+
+int main()
+{
+    std::string text;
+    int shift;
+
+    std::cout << "Enter text: ";
+    std::getline(std::cin, text);
+
+    std::cout << "Enter the shift: ";
+    std::cin >> shift;
+
+    std::cout << "Encrypted text: " << encrypt_caesar(text, shift) << std::endl;
 
     return 0;
 }
