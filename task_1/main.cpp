@@ -1,38 +1,21 @@
 #include <iostream>
-#include <string>
-
-std::string encrypt_caesar(const std::string &text, int shift)
-{
-    std::string result;
-
-    for (char ch : text)
-    {
-        if (std::isalpha(ch))
-        {
-            char base = std::isupper(ch) ? 'A' : 'a';
-            result += (ch - base + shift) % 26 + base;
-        }
-        else
-        {
-            result += ch;
-        }
-    }
-
-    return result;
-}
 
 int main()
 {
-    std::string text;
-    int shift;
 
-    std::cout << "Enter text: ";
-    std::getline(std::cin, text);
-
-    std::cout << "Enter the shift: ";
-    std::cin >> shift;
-
-    std::cout << "Encrypted text: " << encrypt_caesar(text, shift) << std::endl;
-
-    return 0;
+    int first, second, third;
+    std::string village[] = {"SidorovA", "IvanovA", "PetrovA", "SidorovB", "IvanovB", "PetrovB", "SidorovC", "IvanovC", "PetrovC", "SidorovD"};
+    std::cout << "Enter 3 apartments (1- 10): " << std::endl;
+    std::cin >> first >> second >> third;
+    if ((first > 0 && first <= 10) && (second > 0 && second <= 10) && (third > 0 && third <= 10))
+    {
+        std::cout << "Select villages\n"
+                  << "First village: " << village[first - 1] << ", "
+                  << "second village: " << village[second - 1] << ", "
+                  << "third village: " << village[third - 1] << ".";
+    }
+    else
+    {
+        std::cout << "Invalid number apartments!";
+    }
 }

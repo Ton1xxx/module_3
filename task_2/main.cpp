@@ -1,68 +1,46 @@
 #include <iostream>
-#include <string>
 
-bool is_letter_or_digit(char ch)
+void quickSort(float arr[], int low, int high)
 {
-    return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9');
-}
-
-bool is_valid_local(const std::string &local)
-{
-    std::string allowed_chars = "!#$%&'*+-/=?^_`{|}~.";
-
-    if (local.empty() || local.size() > 64)
-        return false;
-    if (local.front() == '.' || local.back() == '.')
-        return false;
-
-    for (size_t i = 0; i < local.size(); ++i)
+    if (low < high)
     {
-        char ch = local[i];
-        if (!(is_letter_or_digit(ch) || allowed_chars.find(ch) != std::string::npos))
-            return false;
-        if (ch == '.' && i > 0 && local[i - 1] == '.')
-            return false;
+        float pivot = arr[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (arr[j] > pivot)
+            {
+                i++;
+                std::swap(arr[i], arr[j]);
+            }
+        }
+        std::swap(arr[i + 1], arr[high]);
+        int pi = i + 1;
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
     }
-
-    return true;
-}
-
-bool is_valid_domain(const std::string &domain)
-{
-    if (domain.empty() || domain.size() > 63)
-        return false;
-    if (domain.front() == '.' || domain.back() == '.')
-        return false;
-
-    for (char ch : domain)
-    {
-        if (!(is_letter_or_digit(ch) || ch == '-' || ch == '.'))
-            return false;
-    }
-
-    return true;
-}
-
-bool is_valid_email(const std::string &email)
-{
-    size_t at_pos = email.find('@');
-    if (at_pos == std::string::npos || email.find('@', at_pos + 1) != std::string::npos)
-        return false;
-
-    std::string local = email.substr(0, at_pos);
-    std::string domain = email.substr(at_pos + 1);
-
-    return is_valid_local(local) && is_valid_domain(domain);
 }
 
 int main()
 {
-    std::string email;
+    const int size = 15;
+    float numbers[size];
 
-    std::cout << "Enter email: ";
-    std::getline(std::cin, email);
+    std::cout << "Enter 15 float numbers: ";
+    for (int i = 0; i < size; i++)
+    {
+        std::cin >> numbers[i];
+    }
 
-    std::cout << (is_valid_email(email) ? "Yes" : "No") << std::endl;
+    quickSort(numbers, 0, size - 1);
+
+    std::cout << "Sorted numbers: ";
+    for (int i = 0; i < size; i++)
+    {
+        std::cout << numbers[i] << " ";
+    }
 
     return 0;
 }
