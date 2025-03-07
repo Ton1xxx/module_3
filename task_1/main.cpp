@@ -1,21 +1,42 @@
 #include <iostream>
+#include <vector>
 
 int main()
 {
+    int n, x;
+    std::cout << "Input vector size: ";
+    std::cin >> n;
 
-    int first, second, third;
-    std::string village[] = {"SidorovA", "IvanovA", "PetrovA", "SidorovB", "IvanovB", "PetrovB", "SidorovC", "IvanovC", "PetrovC", "SidorovD"};
-    std::cout << "Enter 3 apartments (1- 10): " << std::endl;
-    std::cin >> first >> second >> third;
-    if ((first > 0 && first <= 10) && (second > 0 && second <= 10) && (third > 0 && third <= 10))
+    std::vector<int> vec(n);
+    std::cout << "Input numbers: ";
+    for (int i = 0; i < n; ++i)
     {
-        std::cout << "Select villages\n"
-                  << "First village: " << village[first - 1] << ", "
-                  << "second village: " << village[second - 1] << ", "
-                  << "third village: " << village[third - 1] << ".";
+        std::cin >> vec[i];
     }
-    else
+
+    std::cout << "Input number to delete: ";
+    std::cin >> x;
+
+    int i = 0;
+    for (int j = 0; j < vec.size(); ++j)
     {
-        std::cout << "Invalid number apartments!";
+        if (vec[j] != x)
+        {
+            vec[i++] = vec[j];
+        }
     }
+
+    while (vec.size() > i)
+    {
+        vec.pop_back();
+    }
+
+    std::cout << "Result: ";
+    for (int num : vec)
+    {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
 }

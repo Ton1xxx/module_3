@@ -1,23 +1,39 @@
 #include <iostream>
-#include <cassert>
-
-float travelTime(float distance, float speed)
-{
-    assert(speed > 0 && "Speed must be greater than zero!");
-    return distance / speed;
-}
+#include <vector>
 
 int main()
 {
-    float distance, speed;
+    const int MAX_SIZE = 20;
+    std::vector<int> db;
+    int num;
 
-    std::cout << "Enter distance: ";
-    std::cin >> distance;
-    std::cout << "Enter speed: ";
-    std::cin >> speed;
+    while (true)
+    {
+        std::cout << "input number: ";
+        std::cin >> num;
 
-    float time = travelTime(distance, speed);
-    std::cout << "Travel time: " << time << " hours" << std::endl;
+        if (num == -1)
+        {
+            std::cout << "output: ";
+            for (int val : db)
+            {
+                std::cout << val << " ";
+            }
+            std::cout << std::endl;
+        }
+        else
+        {
+            if (db.size() < MAX_SIZE)
+            {
+                db.push_back(num);
+            }
+            else
+            {
+                db.erase(db.begin());
+                db.push_back(num);
+            }
+        }
+    }
 
     return 0;
 }
