@@ -1,42 +1,54 @@
 #include <iostream>
-#include <vector>
 
 int main()
 {
-    int n, x;
-    std::cout << "Input vector size: ";
-    std::cin >> n;
+    const int rows = 2, cols = 6;
 
-    std::vector<int> vec(n);
-    std::cout << "Input numbers: ";
-    for (int i = 0; i < n; ++i)
+    int utensils[rows][cols] = {{3, 3, 3, 3, 3, 3}, {3, 3, 3, 3, 3, 3}};
+    int plates[rows][cols] = {{2, 2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2}};
+    int chairs[rows][cols] = {{1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1}};
+
+    utensils[0][0]++;
+    utensils[0][1]++;
+    plates[0][0]++;
+    plates[0][1]++;
+
+    chairs[0][4]++;
+    utensils[1][2]--;
+    utensils[0][0]--;
+    utensils[0][0]++;
+    plates[0][0]--;
+
+    std::cout << "Updated banquet table setup:\n";
+    std::cout << "Utensils:\n";
+    for (int i = 0; i < rows; i++)
     {
-        std::cin >> vec[i];
-    }
-
-    std::cout << "Input number to delete: ";
-    std::cin >> x;
-
-    int i = 0;
-    for (int j = 0; j < vec.size(); ++j)
-    {
-        if (vec[j] != x)
+        for (int j = 0; j < cols; j++)
         {
-            vec[i++] = vec[j];
+            std::cout << utensils[i][j] << " ";
         }
+        std::cout << "\n";
     }
 
-    while (vec.size() > i)
+    std::cout << "Plates:\n";
+    for (int i = 0; i < rows; i++)
     {
-        vec.pop_back();
+        for (int j = 0; j < cols; j++)
+        {
+            std::cout << plates[i][j] << " ";
+        }
+        std::cout << "\n";
     }
 
-    std::cout << "Result: ";
-    for (int num : vec)
+    std::cout << "Chairs:\n";
+    for (int i = 0; i < rows; i++)
     {
-        std::cout << num << " ";
+        for (int j = 0; j < cols; j++)
+        {
+            std::cout << chairs[i][j] << " ";
+        }
+        std::cout << "\n";
     }
-    std::cout << std::endl;
 
     return 0;
 }

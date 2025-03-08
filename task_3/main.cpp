@@ -1,39 +1,60 @@
 #include <iostream>
-#include <vector>
+
+const int SIZE = 4;
+
+bool compareMatrices(int A[SIZE][SIZE], int B[SIZE][SIZE])
+{
+    for (int i = 0; i < SIZE; i++)
+        for (int j = 0; j < SIZE; j++)
+            if (A[i][j] != B[i][j])
+                return false;
+    return true;
+}
+
+void toDiagonal(int A[SIZE][SIZE])
+{
+    for (int i = 0; i < SIZE; i++)
+        for (int j = 0; j < SIZE; j++)
+            if (i != j)
+                A[i][j] = 0;
+}
+
+void printMatrix(int A[SIZE][SIZE])
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+            std::cout << A[i][j] << " ";
+        std::cout << "\n";
+    }
+}
 
 int main()
 {
-    const int MAX_SIZE = 20;
-    std::vector<int> db;
-    int num;
+    int A[SIZE][SIZE], B[SIZE][SIZE];
 
-    while (true)
+    std::cout << "Enter matrix A (4x4):\n";
+    for (int i = 0; i < SIZE; i++)
+        for (int j = 0; j < SIZE; j++)
+            std::cin >> A[i][j];
+
+    std::cout << "Enter matrix B (4x4):\n";
+    for (int i = 0; i < SIZE; i++)
+        for (int j = 0; j < SIZE; j++)
+            std::cin >> B[i][j];
+
+    if (!compareMatrices(A, B))
     {
-        std::cout << "input number: ";
-        std::cin >> num;
-
-        if (num == -1)
-        {
-            std::cout << "output: ";
-            for (int val : db)
-            {
-                std::cout << val << " ";
-            }
-            std::cout << std::endl;
-        }
-        else
-        {
-            if (db.size() < MAX_SIZE)
-            {
-                db.push_back(num);
-            }
-            else
-            {
-                db.erase(db.begin());
-                db.push_back(num);
-            }
-        }
+        std::cout << "Matrices are not equal.\n";
+        return 0;
     }
+
+    std::cout << "Matrices are equal.\n";
+
+    toDiagonal(A);
+
+    std::cout << "Diagonal matrix:\n";
+    printMatrix(A);
 
     return 0;
 }
