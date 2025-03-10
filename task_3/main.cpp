@@ -1,60 +1,52 @@
 #include <iostream>
-
-const int SIZE = 4;
-
-bool compareMatrices(int A[SIZE][SIZE], int B[SIZE][SIZE])
-{
-    for (int i = 0; i < SIZE; i++)
-        for (int j = 0; j < SIZE; j++)
-            if (A[i][j] != B[i][j])
-                return false;
-    return true;
-}
-
-void toDiagonal(int A[SIZE][SIZE])
-{
-    for (int i = 0; i < SIZE; i++)
-        for (int j = 0; j < SIZE; j++)
-            if (i != j)
-                A[i][j] = 0;
-}
-
-void printMatrix(int A[SIZE][SIZE])
-{
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-            std::cout << A[i][j] << " ";
-        std::cout << "\n";
-    }
-}
+#include <vector>
+#include <algorithm>
 
 int main()
 {
-    int A[SIZE][SIZE], B[SIZE][SIZE];
+    std::vector<int> numbers;
+    int num;
 
-    std::cout << "Enter matrix A (4x4):\n";
-    for (int i = 0; i < SIZE; i++)
-        for (int j = 0; j < SIZE; j++)
-            std::cin >> A[i][j];
-
-    std::cout << "Enter matrix B (4x4):\n";
-    for (int i = 0; i < SIZE; i++)
-        for (int j = 0; j < SIZE; j++)
-            std::cin >> B[i][j];
-
-    if (!compareMatrices(A, B))
+    while (true)
     {
-        std::cout << "Matrices are not equal.\n";
-        return 0;
+        std::cout << "Enter number: ";
+        std::cin >> num;
+
+        if (num == -2)
+        {
+            std::cout << "shutdown";
+            break;
+        }
+
+        if (num == -1)
+        {
+            if (numbers.size() < 5)
+            {
+                std::cout << "Not enough numbers." << std::endl;
+            }
+            else
+            {
+                std::sort(numbers.begin(), numbers.end());
+                std::cout << "number: " << numbers[4] << std::endl;
+            }
+        }
+        else
+        {
+            if (numbers.size() < 5)
+            {
+                numbers.push_back(num);
+            }
+            else
+            {
+                if (num < numbers[4])
+                {
+                    numbers.push_back(num);
+                    std::sort(numbers.begin(), numbers.end());
+                    numbers.pop_back();
+                }
+            }
+        }
     }
-
-    std::cout << "Matrices are equal.\n";
-
-    toDiagonal(A);
-
-    std::cout << "Diagonal matrix:\n";
-    printMatrix(A);
 
     return 0;
 }

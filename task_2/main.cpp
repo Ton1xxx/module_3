@@ -1,67 +1,37 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
-const int SIZE = 3;
-
-void printBoard(char board[SIZE][SIZE])
+bool find_sum(std::vector<int> &vec, int target)
 {
-    std::cout << "  0 1 2\n";
-    for (int i = 0; i < SIZE; i++)
+    std::sort(vec.begin(), vec.end());
+    int left = 0, right = vec.size() - 1;
+    while (left < right)
     {
-        std::cout << i << " ";
-        for (int j = 0; j < SIZE; j++)
+        int sum = vec[left] + vec[right];
+        if (sum == target)
         {
-            std::cout << board[i][j] << " ";
+            std::cout << "Numbers " << vec[left] << " and "
+                      << vec[right] << " add up to " << target;
+            return 1;
         }
-        std::cout << "\n";
+        else if (sum > target)
+        {
+            right--;
+        }
+        else if (sum < target)
+        {
+            left++;
+        }
     }
+    return 0;
 }
-
-bool checkWin(char board[SIZE][SIZE], char player)
-{
-    for (int i = 0; i < SIZE; i++)
-    {
-        if (board[i][0] == player && board[i][1] == player && board[i][2] == player)
-            return true;
-        if (board[0][i] == player && board[1][i] == player && board[2][i] == player)
-            return true;
-    }
-    return false;
-}
-
 int main()
 {
-    char board[SIZE][SIZE] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
-    char player = 'X';
-    int moves = 0;
-
-    while (moves < SIZE * SIZE)
+    std::vector<int> vec = {1, 45, 7, 43, 8, 2, 4, 3, 9};
+    int target = 16;
+    if (!find_sum(vec, target))
     {
-        int row, col;
-        printBoard(board);
-
-        std::cout << "Player " << player << ", enter row and column (0-2): ";
-        std::cin >> row >> col;
-
-        if (row < 0 || row >= SIZE || col < 0 || col >= SIZE || board[row][col] != ' ')
-        {
-            std::cout << "Invalid move! Try again.\n";
-            continue;
-        }
-
-        board[row][col] = player;
-        moves++;
-
-        if (checkWin(board, player))
-        {
-            printBoard(board);
-            std::cout << "Player " << player << " wins!\n";
-            return 0;
-        }
-
-        player = (player == 'X') ? 'O' : 'X';
+        std::cout << "Numbers not found";
     }
-
-    printBoard(board);
-    std::cout << "It's a draw!\n";
-    return 0;
 }

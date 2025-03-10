@@ -1,54 +1,38 @@
 #include <iostream>
+#include <vector>
+
+void findMaxSubarray(const std::vector<int> &arr)
+{
+    int maxSum = arr[0], currentSum = arr[0];
+    int start = 0, end = 0, tempStart = 0;
+
+    for (int i = 1; i < arr.size(); i++)
+    {
+        if (currentSum < 0)
+        {
+            currentSum = arr[i];
+            tempStart = i;
+        }
+        else
+        {
+            currentSum += arr[i];
+        }
+
+        if (currentSum > maxSum)
+        {
+            maxSum = currentSum;
+            start = tempStart;
+            end = i;
+        }
+    }
+
+    std::cout << "Max sum: " << maxSum << std::endl;
+    std::cout << "Start index: " << start << ", End index: " << end << std::endl;
+}
 
 int main()
 {
-    const int rows = 2, cols = 6;
-
-    int utensils[rows][cols] = {{3, 3, 3, 3, 3, 3}, {3, 3, 3, 3, 3, 3}};
-    int plates[rows][cols] = {{2, 2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2}};
-    int chairs[rows][cols] = {{1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1}};
-
-    utensils[0][0]++;
-    utensils[0][1]++;
-    plates[0][0]++;
-    plates[0][1]++;
-
-    chairs[0][4]++;
-    utensils[1][2]--;
-    utensils[0][0]--;
-    utensils[0][0]++;
-    plates[0][0]--;
-
-    std::cout << "Updated banquet table setup:\n";
-    std::cout << "Utensils:\n";
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols; j++)
-        {
-            std::cout << utensils[i][j] << " ";
-        }
-        std::cout << "\n";
-    }
-
-    std::cout << "Plates:\n";
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols; j++)
-        {
-            std::cout << plates[i][j] << " ";
-        }
-        std::cout << "\n";
-    }
-
-    std::cout << "Chairs:\n";
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols; j++)
-        {
-            std::cout << chairs[i][j] << " ";
-        }
-        std::cout << "\n";
-    }
-
+    std::vector<int> arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    findMaxSubarray(arr);
     return 0;
 }
