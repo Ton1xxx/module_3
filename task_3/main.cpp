@@ -1,52 +1,38 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <sstream>
 
 int main()
 {
-    std::vector<int> numbers;
-    int num;
+    std::string buffer;
+    std::cout << "Enter an expression in the format <number1><operator><number2> (without spaces): ";
+    std::cin >> buffer;
 
-    while (true)
+    double a, b;
+    char operation;
+    std::stringstream buffer_stream(buffer);
+
+    buffer_stream >> a >> operation >> b;
+
+    double result;
+    switch (operation)
     {
-        std::cout << "Enter number: ";
-        std::cin >> num;
-
-        if (num == -2)
-        {
-            std::cout << "shutdown";
-            break;
-        }
-
-        if (num == -1)
-        {
-            if (numbers.size() < 5)
-            {
-                std::cout << "Not enough numbers." << std::endl;
-            }
-            else
-            {
-                std::sort(numbers.begin(), numbers.end());
-                std::cout << "number: " << numbers[4] << std::endl;
-            }
-        }
-        else
-        {
-            if (numbers.size() < 5)
-            {
-                numbers.push_back(num);
-            }
-            else
-            {
-                if (num < numbers[4])
-                {
-                    numbers.push_back(num);
-                    std::sort(numbers.begin(), numbers.end());
-                    numbers.pop_back();
-                }
-            }
-        }
+    case '+':
+        result = a + b;
+        break;
+    case '-':
+        result = a - b;
+        break;
+    case '*':
+        result = a * b;
+        break;
+    case '/':
+        result = a / b;
+        break;
+    default:
+        std::cout << "Error: unknown operation!" << std::endl;
+        return 1;
     }
 
+    std::cout << "Result: " << result << std::endl;
     return 0;
 }
